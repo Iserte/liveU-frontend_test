@@ -1,3 +1,3 @@
 import express from './app';
 
-express.listen(3333);
+express.listen(process.env.PORT || 8080);

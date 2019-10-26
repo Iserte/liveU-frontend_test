@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "nodemon src/server.js",
     "build": "sucrase ./src -d ./build --transforms imports",
-    "start": "pm2 start build/server.js --name LiveU-Frontend"
+    "pm2": "pm2 start build/server.js --name LiveU-Frontend",
+    "start": "node build/server.js"
   },
   "dependencies": {
     "ejs": "^2.7.1",
