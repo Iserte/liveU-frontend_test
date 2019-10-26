@@ -1,0 +1,150 @@
+main {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+}
+
+div,
+button,
+input,
+span,
+select,
+.items {
+  border: 1px solid #777;
+}
+
+button {
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+  outline: none;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+button:hover {
+  border: 1px solid #222;
+  color: #fff;
+}
+
+button:active {
+  border: 1px solid #777;
+  color: #444;
+}
+
+.obj1,
+.obj2,
+.obj3 {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.obj1 {
+  width: 20%;
+  min-width: 200px;
+  max-width: 350px;
+  background: #ccc;
+}
+
+.obj1 span,
+.obj2 span {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.obj1 span input {
+  text-align: center;
+}
+
+.obj1 button,
+.obj1 span,
+.obj2 span {
+  padding: 0;
+  height: 70px;
+  margin-top: 50px;
+  background: #aaa;
+}
+
+.obj1 button,
+.obj1 span label,
+.item-index,
+.item-name,
+.navigation button {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+}
+
+.obj2 {
+  width: 20%;
+  max-width: 200px;
+  background: #aaa;
+  display: none;
+}
+
+.obj2 span {
+  padding: 0 20px;
+}
+.obj2 span select {
+  width: 100%;
+  font-size: 16px;
+  text-align-last: center;
+  background: #eee;
+}
+
+.obj3 {
+  width: 100%;
+  background: #eee;
+  padding: 50px;
+}
+
+.items {
+  width: 100%;
+  height: 100px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: flex-start;
+
+  background: #aaa;
+  padding: 10px 25px;
+  margin: 25px 0;
+}
+
+.item-index {
+  border: 1px solid #444;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  background: #ccc;
+  border: none;
+  text-align: center;
+  line-height: 50px;
+}
+
+.item-name {
+  width: 100%;
+  text-align: center;
+  font-size: 24px;
+}
+
+.navigation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+}
+
+.navigation button {
+  border: none;
+  background: none;
+  margin: 0 5px;
+}
+
+.navigation button:hover {
+  color: #777;
+}

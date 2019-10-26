@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <% include ../partials/head %>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <container style="display: none;">
+      <p id="page"></p>
+      <p id="items"></p>
+    </container>
+    <main>
+      <div class="obj1">
+        <button id="btn-option">Option</button>
+        <span>
+          <label for="quantity">Quantity</label>
+          <input
+            type="text"
+            name="quantity"
+            id="quantity"
+            placeholder="Type here"
+          />
+        </span>
+      </div>
+      <div class="obj2">
+        <span>
+          <select name="dropdown" id="dropdown">
+            <option value="A">A</option>
+            <option value="B">B</option>
+          </select>
+        </span>
+      </div>
+      <div class="obj3">
+        <span class="navigation">
+          <button id="btn-back">Back</button>
+          <button id="btn-next">Next</button>
+        </span>
+      </div>
+    </main>
+
+    <script>
+      $(window).click(e => {
+        if (
+          !e.target.closest('.obj2') &&
+          e.target !== $('#btn-option')[0] &&
+          $('.obj2').css('display') === 'block'
+        ) {
+          $('.obj2').animate({ width: 'toggle' });
+        }
+      });
+
+      $('#btn-option').click(() => {
+        $('.obj2').animate({ width: 'toggle' });
+      });
+
+      $('#quantity').change(e => {
+        const itemName = $('#dropdown').val();
+        const quantity = e.target.value;
+        $('.items').remove();
+
+        $('#quantity').css({
+          border: 'none',
+          background: 'white',
+        });
+
+        for (let i = 0; i < quantity; i++) {
+          const actual = i + 1;
+          $('#items').append(`
+            <div class="items">
+              <span class="item-index">${actual}</span>
+              <h2 class="item-name">Item ${itemName + actual}</h2>
+            </div>
+          `);
+        }
+        handlePagination();
+      });
+
+      $('#dropdown').change(e => {
+        if (!parseInt($('#quantity').val())) {
+          $('#quantity').css({
+            border: '1px solid red',
+            background: '#ffbbbb',
+          });
+        }
+
+        const itemName = e.target.value;
+
+        $('.items').each((i, e) => {
+          e.innerHTML = e.innerHTML.replace(/Item \D/g, `Item ${itemName}`);
+        });
+
+        return;
+        $('.items')
+          .children('h2')
+          .each((i, e) => {
+            const quantity = i + 1;
+            e.innerHTML = `Item ${itemName + quantity}`;
+          });
+
+        handlePagination('dropdown');
+      });
+
+      $('#btn-back').click(e => {
+        handlePagination('back');
+      });
+
+      $('#btn-next').click(e => {
+        handlePagination('next');
+      });
+
+      function handlePagination(action) {
+        const page = parseInt($('#page').val()) || 0;
+        const items = [];
+        $('#items')
+          .children('div')
+          .each((i, e) => items.push(e.outerHTML));
+
+        if (action === 'back') {
+          $.post(`/`, { page: page - 1, items }, data => handlePost(data));
+        } else if (action === 'next') {
+          $.post(`/`, { page: page + 1, items }, data => handlePost(data));
+        } else if (action === 'dropdown') {
+          // do nothing
+        } else {
+          $('.items')
+            .slice(0, 3)
+            .show();
+
+          const slicedItems = items.slice(0, 3);
+
+          slicedItems.forEach(element => {
+            $(element).insertBefore('.navigation');
+          });
+        }
+      }
+
+      function handlePost(data) {
+        const { page, allItems, currentItems } = data;
+        $('#page').val(page);
+        $('#items').val(allItems);
+        $('.obj3')
+          .children('div')
+          .remove();
+
+        currentItems.forEach(element => {
+          $(element).insertBefore('.navigation');
+        });
+      }
+    </script>
+  </body>
+</html>
